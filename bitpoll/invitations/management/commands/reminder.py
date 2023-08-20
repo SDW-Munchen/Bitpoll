@@ -30,6 +30,7 @@ class Command(BaseCommand):
             for expiring_choice in poll.choice_set.filter(
                 date__gt=timezone.now(),
                 date__lte=timezone.now() + timedelta(days=options["n-days"]),
+                deleted=False,
             ):
                 print(f"Found expiring option in this poll: {expiring_choice}")
                 for invitation in poll.invitation_set.all():
