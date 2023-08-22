@@ -76,6 +76,7 @@ class PollSettingsForm(ModelForm):
             "separate_groups",
             "use_user_timezone",
             "sorting",
+            "show_score_in_summary",
         ]
 
 

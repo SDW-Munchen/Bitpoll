@@ -3,13 +3,12 @@
 {% load poll_filter vote_permissions comment_permissions poll_permissions %}
 {% load tz %}
 {% block title %}{{ poll.title }}{% endblock %}
-{% load django_markdown django_markdown_static %}
 
 {% block css %}
-    {% include "poll/choice_style.html" %}
+{% include "poll/choice_style.html" %}
 {% endblock %}
 
 {% block content %}
-        {% include 'poll/poll_header.html' %}
-        {% include 'poll/poll_content.html' %}
+{% include 'poll/poll_header.html' %}
+{% include 'poll/poll_content.html' %}
 {% endblock %}

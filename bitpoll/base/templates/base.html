@@ -5,16 +5,17 @@
 {% load tz %}
 {% load socialaccount %}
 
-{%  value_from_settings SITE_NAME as site_name %}
-{%  value_from_settings DEBUG as debug %}
-{%  value_from_settings HOME_URL as home_url %}
-{%  value_from_settings HOME_URL_NAME as home_url_name %}
-{%  value_from_settings BASE_URL as base_url %}
-{%  value_from_settings REGISTER_ENABLED as register %}
-{%  value_from_settings GROUP_MANAGEMENT as group_management_enabled %}
+{% value_from_settings SITE_NAME as site_name %}
+{% value_from_settings DEBUG as debug %}
+{% value_from_settings HOME_URL as home_url %}
+{% value_from_settings HOME_URL_NAME as home_url_name %}
+{% value_from_settings BASE_URL as base_url %}
+{% value_from_settings REGISTER_ENABLED as register %}
+{% value_from_settings GROUP_MANAGEMENT as group_management_enabled %}
 
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,27 +24,29 @@
     {% stylesheet 'base' %}
     {% stylesheet 'base_print' %}
     {% javascript 'base' %}
-    {% block css %}{%  endblock %}
+    {% block css %}{% endblock %}
     {% block headJS %}{% endblock %}
 </head>
+
 <body>
-<div id="wrapper">
-    {% include 'base_header.html' %}
+    <div id="wrapper">
+        {% include 'base_header.html' %}
 
-    <section id="main-content">
-        {% block content %}
-        {% endblock %}
-    </section>
+        <section id="main-content">
+            {% block content %}
+            {% endblock %}
+        </section>
 
-    {% include 'base_footer.html' %}
-</div>
+        {% include 'base_footer.html' %}
+    </div>
 
     {% javascript 'base_late' %}
-{% comment %}
-    <script src="{% static 'coffee/votefilter.coffee'|compile %}"  type="text/javascript" ></script>
-{% endcomment %}
+    {% comment %}
+    <script src="{% static 'coffee/votefilter.coffee'|compile %}" type="text/javascript"></script>
+    {% endcomment %}
     <script nonce="{% csp_js_nonce %}">moment.locale("{{ request.LANGUAGE_CODE }}")</script>
     {% block additionalJS %}
     {% endblock %}
 </body>
+
 </html>

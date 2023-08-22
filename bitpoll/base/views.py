@@ -126,6 +126,7 @@ def user_settings(request):
         )
         .distinct()
         .order_by("-due_date")
+        .select_related('user', 'group')
     )
 
     if request.method == "POST":
@@ -143,11 +144,23 @@ def user_settings(request):
 
     user_form = BitpollUserSettingsForm(instance=request.user)
 
+        # List of polls the user has voted on
+    polls_voted = Vote.objects.filter(user=request.user, poll__in=polls).values_list('poll_id', flat=True)
+
+    # List of polls the user watches
+    polls_watched = PollWatch.objects.filter(user=request.user, poll__in=polls).values_list('poll_id', flat=True)
+
+    # List of polls that come from the group
+    polls_group = Poll.objects.filter(group__user=request.user).values_list('id', flat=True)
+
     return TemplateResponse(
         request,
         "base/settings.html",
         {
             "polls": polls,
+            "polls_voted": polls_voted,
+            "polls_watched": polls_watched,
+            "polls_group": polls_group,
             "user": request.user,
             "user_form": user_form,
             "languages": USER_LANG,

@@ -8,28 +8,28 @@
 {% block title %}{{ poll.title }}{% endblock %}
 
 {% block headJS %}
-    {{ form.media }}
+{{ form.media }}
 {% endblock %}
 
 {% block content %}
-        {% include 'poll/poll_header.html' %}
-        <div class="container">
+{% include 'poll/poll_header.html' %}
+<div class="container">
 
     <form action="{% url 'poll_settings' poll.url %}" method="post">
-    {% csrf_token %}
+        {% csrf_token %}
         <div class="col-md-5">
             <div class="form-group">
                 <label for="title-input">{% trans 'Title' %}</label>
                 <input autocomplete="off" class="form-control" id="title-input" name="{{ form.title.name }}"
                     placeholder="{% trans 'Title' %}" type="text" value="{{ form.title.value|default_if_none:'' }}" />
                 {% if form.title.errors %}
-                    <div class="form-errors">
-                        <div class="alert alert-danger">
-                            <div class="container">
-                                <i class="fa fa-times"></i>{{ form.title.errors }}
-                            </div>
+                <div class="form-errors">
+                    <div class="alert alert-danger">
+                        <div class="container">
+                            <i class="fa-solid fa-times"></i>{{ form.title.errors }}
                         </div>
                     </div>
+                </div>
                 {% endif %}
             </div>
 
@@ -37,19 +37,19 @@
             <div class="form-group">
 
                 {% render_field form.due_date class+="form-control" id+="datetimepicker" %}
-                 {% if form.due_date.errors %}
-                    <div class="form-errors">
-                        <div class="alert alert-danger">
-                            <div class="container">
-                                <i class="fa fa-times"></i>{{ form.due_date.errors }}
-                            </div>
+                {% if form.due_date.errors %}
+                <div class="form-errors">
+                    <div class="alert alert-danger">
+                        <div class="container">
+                            <i class="fa-solid fa-times"></i>{{ form.due_date.errors }}
                         </div>
                     </div>
+                </div>
                 {% endif %}
             </div>
 
             <label for="show-result-select">{% trans 'Show Results' %}</label><br>
-            {% render_field  form.show_results class+='form-control'%}
+            {% render_field form.show_results class+='form-control'%}
             <br>
             <div class="help-block">
                 {% blocktrans %}
@@ -61,16 +61,17 @@
                 <label for="timezone-select">{% trans 'Timezone' %}</label><br>
                 <select id="timezone-select" class="form-control" name="{{ form.timezone_name.name }}">
                     {% for timezone in timezones %}
-                        {% if timezone == form.timezone_name.value %}
-                            <option value="{{ timezone }}" selected="selected"> {{ timezone }}</option>
-                        {% else %}
-                            <option value="{{ timezone }}"> {{ timezone }}</option>
-                        {% endif %}
+                    {% if timezone == form.timezone_name.value %}
+                    <option value="{{ timezone }}" selected="selected"> {{ timezone }}</option>
+                    {% else %}
+                    <option value="{{ timezone }}"> {{ timezone }}</option>
+                    {% endif %}
                     {% endfor %}
                 </select>
                 <div class="checkbox">
-                    <input type="checkbox" id="public_listening" name="{{ form.use_user_timezone.name }}" {% if form.use_user_timezone.value %} checked {% endif %}>
-                    <label for="public_listening">{% trans 'Translate all times to the users timezone' %}</label>
+                    <input type="checkbox" id="use_user_timezone" name="{{ form.use_user_timezone.name }}" {% if
+                        form.use_user_timezone.value %} checked {% endif %}>
+                    <label for="use_user_timezone">{% trans 'Translate all times to the users timezone' %}</label>
                 </div>
             </div>
 
@@ -82,7 +83,7 @@
                 You can use
                 <a href="http://daringfireball.net/projects/markdown/" target="_blank">Markdown</a>
                 syntax for formatting.
-            {% endblocktrans %}
+                {% endblocktrans %}
             </div>
             <br>
             <a href="{% url 'poll' poll.url %}" class="action">{% trans 'Back to poll' %}</a>
@@ -91,70 +92,95 @@
 
 
         <div class="col-md-5 col-md-offset-1">
-          <label>{% trans 'additional Settings' %}</label>
+            <label>{% trans 'Additional Settings' %}</label>
             <div class="checkbox">
-                <input type="checkbox" id="allow_comments" name="{{ form.allow_comments.name }}" {% if form.allow_comments.value %} checked {% endif %}>
-                <label for="allow_comments">{% trans 'allow comments' %}</label>
+                <input type="checkbox" id="allow_comments" name="{{ form.allow_comments.name }}" {% if
+                    form.allow_comments.value %} checked {% endif %}>
+                <label for="allow_comments">{% trans 'Allow comments' %}</label>
             </div>
             <div class="checkbox">
-                <input type="checkbox" id="anonymous_allowed" name="{{ form.anonymous_allowed.name }}" {% if form.anonymous_allowed.value %} checked {% endif %}>
-                <label for="anonymous_allowed">{% trans 'allow anonymous votes' %}</label>
+                <input type="checkbox" id="anonymous_allowed" name="{{ form.anonymous_allowed.name }}" {% if
+                    form.anonymous_allowed.value %} checked {% endif %}>
+                <label for="anonymous_allowed">{% trans 'Allow anonymous votes' %}</label>
             </div>
             <div class="checkbox">
-                <input type="checkbox" id="require_login" name="{{ form.require_login.name }}" {% if form.require_login.value %} checked {% endif %}>
+                <input type="checkbox" id="require_login" name="{{ form.require_login.name }}" {% if
+                    form.require_login.value %} checked {% endif %}>
                 <label for="require_login">{% trans 'login required to vote' %}</label>
             </div>
             <div class="checkbox">
-                <input type="checkbox" id="require_login_view" name="{{ form.require_login_view.name }}" {% if form.require_login_view.value %} checked {% endif %}>
+                <input type="checkbox" id="require_login_view" name="{{ form.require_login_view.name }}" {% if
+                    form.require_login_view.value %} checked {% endif %}>
                 <label for="require_login_view">{% trans 'login required to view' %}</label>
             </div>
             <div class="checkbox">
-                <input type="checkbox" id="require_invitation" name="{{ form.require_invitation.name }}" {% if form.require_invitation.value %} checked {% endif %}>
-                <label for="require_invitation">{% trans 'invitation required to vote' %}</label>
+                <input type="checkbox" id="require_invitation" name="{{ form.require_invitation.name }}" {% if
+                    form.require_invitation.value %} checked {% endif %}>
+                <label for="require_invitation">{% trans 'Invitation required to vote' %}</label>
             </div>
             <div class="checkbox">
-                <input type="checkbox" id="public_listening" name="{{ form.public_listening.name }}" {% if form.public_listening.value %} checked {% endif %}>
-                <label for="public_listening">{% trans 'show in public poll list' %}</label>
+                <input type="checkbox" id="public_listening" name="{{ form.public_listening.name }}" {% if
+                    form.public_listening.value %} checked {% endif %}>
+                <label for="public_listening">{% trans 'Show in public poll list' %}</label>
             </div>
             <div class="checkbox">
-                <input type="checkbox" id="allow_unauthenticated_vote_changes" name="{{ form.allow_unauthenticated_vote_changes.name }}" {% if form.allow_unauthenticated_vote_changes.value %} checked {% endif %}>
-                <label for="allow_unauthenticated_vote_changes">{% trans 'allow unauthenticated vote changes' %}</label>
+                <input type="checkbox" id="allow_unauthenticated_vote_changes"
+                    name="{{ form.allow_unauthenticated_vote_changes.name }}" {% if
+                    form.allow_unauthenticated_vote_changes.value %} checked {% endif %}>
+                <label for="allow_unauthenticated_vote_changes">{% trans 'Allow unauthenticated vote changes' %}</label>
             </div>
             <div class="checkbox">
-                <input type="checkbox" id="one_vote_per_user" name="{{ form.one_vote_per_user.name }}" {% if form.one_vote_per_user.value %} checked {% endif %}>
-                <label for="one_vote_per_user">{% trans 'one vote per user' %}</label>
+                <input type="checkbox" id="one_vote_per_user" name="{{ form.one_vote_per_user.name }}" {% if
+                    form.one_vote_per_user.value %} checked {% endif %}>
+                <label for="one_vote_per_user">{% trans 'One vote per user' %}</label>
             </div>
             <div class="checkbox">
-                <input type="checkbox" id="show_invitations" name="{{ form.show_invitations.name }}" {% if form.show_invitations.value %} checked {% endif %}>
-                <label for="show_invitations">{% trans 'show invitations as empty votes' %}</label>
+                <input type="checkbox" id="show_invitations" name="{{ form.show_invitations.name }}" {% if
+                    form.show_invitations.value %} checked {% endif %}>
+                <label for="show_invitations">{% trans 'Show invitations as empty votes' %}</label>
             </div>
             <div class="checkbox">
-                <input type="checkbox" id="vote_all" name="{{ form.vote_all.name }}" {% if form.vote_all.value %} checked {% endif %}>
-                <label for="vote_all">{% trans 'forbid empty choices' %}</label>
+                <input type="checkbox" id="vote_all" name="{{ form.vote_all.name }}" {% if form.vote_all.value %}
+                    checked {% endif %}>
+                <label for="vote_all">{% trans 'Forbid empty choices' %}</label>
             </div>
             <div class="checkbox">
-                <input type="checkbox" id="vote_hide_participants" name="{{ form.hide_participants.name }}" {% if form.hide_participants.value %} checked {% endif %}>
-                <label for="vote_hide_participants">{% trans 'hide participants' %}</label>
+                <input type="checkbox" id="vote_hide_participants" name="{{ form.hide_participants.name }}" {% if
+                    form.hide_participants.value %} checked {% endif %}>
+                <label for="vote_hide_participants">{% trans 'Hide participants' %}</label>
             </div>
             <div class="checkbox">
-                <input type="checkbox" id="change_vote_after_event" name="{{ form.change_vote_after_event.name }}" {% if form.change_vote_after_event.value %} checked {% endif %}>
+                <input type="checkbox" id="vote_show_score_in_summary" name="{{ form.show_score_in_summary.name }}" {%
+                    if form.show_score_in_summary.value %} checked {% endif %}>
+                <label for="vote_show_score_in_summary">{% trans 'Show score instead of percentage' %}</label>
+            </div>
+            <div class="checkbox">
+                <input type="checkbox" id="change_vote_after_event" name="{{ form.change_vote_after_event.name }}" {% if
+                    form.change_vote_after_event.value %} checked {% endif %}>
                 <label for="change_vote_after_event">{% trans 'change vote after event' %}</label>
             </div>
             <div class="checkbox">
-                <input type="checkbox" id="separate_groups" name="{{ form.separate_groups.name }}" {% if form.separate_groups.value %} checked {% endif %}>
-                <label for="separate_groups">{% trans 'visually separate Stips, Vertrauenspersonen and Alumni' %}</label>
+                <input type="checkbox" id="separate_groups" name="{{ form.separate_groups.name }}" {% if
+                    form.separate_groups.value %} checked {% endif %}>
+                <label for="separate_groups">{% trans 'visually separate Stips, Vertrauenspersonen and Alumni'
+                    %}</label>
             </div>
             <div class="">
-              {% trans 'Sort results by' %}:
-            {# TODO: use enum values #}
-                <input type="radio" name="{{ form.sorting.name }}" value="0" id="sorting_date" {% if form.sorting.value == 0 %} checked {% endif %}><label for="sorting_date">{% trans 'Date' %}</label>
-                <input type="radio" name="{{ form.sorting.name }}" value="1" id="sorting_name" {% if form.sorting.value == 1 %} checked {% endif %}><label for="sorting_name">{% trans 'Name' %}</label>
-                <input type="radio" name="{{ form.sorting.name }}" value="2" id="sorting_name" {% if form.sorting.value == 2 %} checked {% endif %}><label for="sorting_name">{% trans 'Name (VP last)' %}</label>
+                {% trans 'Sort results by' %}:
+                {# TODO: use enum values #}
+                <input type="radio" name="{{ form.sorting.name }}" value="0" id="sorting_date" {% if
+                    form.sorting.value==0 %} checked {% endif %}><label for="sorting_date">{% trans 'Date' %}</label>
+                <input type="radio" name="{{ form.sorting.name }}" value="1" id="sorting_name" {% if
+                    form.sorting.value==1 %} checked {% endif %}><label for="sorting_name">{% trans 'Name' %}</label>
+                <input type="radio" name="{{ form.sorting.name }}" value="2" id="sorting_name" {% if
+                    form.sorting.value==2 %} checked {% endif %}><label for="sorting_name">{% trans 'Name (VP last)'
+                    %}</label>
 
             </div>
             <div class="help-block">
                 {% blocktrans %}
-                These settings are not retroactive, meaning that changing them will not modify votes/comments already created.
+                These settings are not retroactive, meaning that changing them will not modify votes/comments already
+                created.
                 {% endblocktrans %}
             </div>
 
@@ -164,48 +190,50 @@
                 <input autocomplete="off" class="form-control" id="user-select" name="user"
                     placeholder="{% trans 'User' %}" type="text" value="{{ user_select }}" />
                 {% if user_error %}
-                    <div class="form-errors">
-                        <div class="alert alert-danger">
-                            <div class="container">
-                                <i class="fa fa-times"></i>{{ user_error }}
-                            </div>
+                <div class="form-errors">
+                    <div class="alert alert-danger">
+                        <div class="container">
+                            <i class="fa-solid fa-times"></i>{{ user_error }}
                         </div>
                     </div>
+                </div>
                 {% endif %}
             </div>
 
             <label for="group-select">{% trans 'Group' %}</label><br>
             <select id="group-select" class="form-control" name="{{ form.group.name }}">
                 {% if form.group.value == None %}
-                    <option value="" selected="selected">-----</option>
+                <option value="" selected="selected">-----</option>
                 {% else %}
-                    <option value="">-----</option>
+                <option value="">-----</option>
                 {% endif %}
 
                 {% for group in groups %}
-                    {% if group.id == form.group.value %}
-                        <option value="{{ group.id }}" selected="selected"> {{ group.name }}</option>
-                    {% else %}
-                        <option value="{{ group.id }}"> {{ group.name }}</option>
-                    {% endif %}
+                {% if group.id == form.group.value %}
+                <option value="{{ group.id }}" selected="selected"> {{ group.name }}</option>
+                {% else %}
+                <option value="{{ group.id }}"> {{ group.name }}</option>
+                {% endif %}
                 {% endfor %}
             </select>
             <div class="help-block">
                 {% blocktrans %}
                 Only the owner of a poll, or a member of the owner group, can edit the settings on this page.
-                If you set this to "Nobody", then anyone may claim exclusive ownership. Most restrictive settings above are useless if you do not claim ownership of this poll.
+                If you set this to "Nobody", then anyone may claim exclusive ownership. Most restrictive settings above
+                are useless if you do not claim ownership of this poll.
                 {% endblocktrans %}
             </div>
-            <label>{% trans 'Very advanced stuff' %}</label><br>
+            <label>{% trans 'Advanced Options' %}</label><br>
             <a href="{% url 'poll_editchoicevalues' poll.url %}">{% trans 'Edit possible answer values' %}</a><br>
             <a href="{% url 'invitations' poll.url %}">{% trans 'Manage invitations' %}</a><br>
             <a href="{% url 'poll_copy' poll.url %}">{% trans 'Copy poll' %}</a><br>
             <a class="red" href="{% url 'poll_delete' poll.url %}">{% trans 'Delete this poll' %}</a>
-        </div></form>
         </div>
+    </form>
+</div>
 {% endblock %}
 
 {% load csp %}
 {% block additionalJS %}
-    <script nonce="{% csp_js_nonce %}">$.datetimepicker.setLocale('{{ request.LANGUAGE_CODE }}');</script>
+<script nonce="{% csp_js_nonce %}">$.datetimepicker.setLocale('{{ request.LANGUAGE_CODE }}');</script>
 {% endblock %}

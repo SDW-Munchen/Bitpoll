@@ -1,7 +1,6 @@
 import enum
 from smtplib import SMTPRecipientsRefused
 from typing import Optional
-
 from bitpoll.base.models import BitpollUser
 from bitpoll.base.validators import validate_timezone
 from bitpoll.poll.util import DateTimePart, PartialDateTime
@@ -16,8 +15,7 @@ from django.template.loader import render_to_string
 from django.urls import reverse
 from django.utils import translation
 from django.utils.functional import cached_property
-from django.utils.translation import ugettext_lazy as _
-from django_markdown.models import MarkdownField
+from django.utils.translation import gettext_lazy as _
 
 POLL_TYPES = (
     ("universal", "Universal"),
@@ -70,6 +68,7 @@ class Poll(models.Model):
     hide_participants = models.BooleanField(default=False)
     change_vote_after_event = models.BooleanField(default=False)
     separate_groups = models.BooleanField(default=False)
+    show_score_in_summary = models.BooleanField(default=False)
 
     class ResultSorting(enum.IntEnum):
         DATE = 0
@@ -163,12 +162,12 @@ class Poll(models.Model):
         return self.user == user or (self.group and user in self.group.user_set.all())
 
     def get_icon(self):
-        if self.type == "universal":
-            return "list"
-        if self.type == "datetime":
-            return "clock-o"
-        if self.type == "date":
-            return "calendar"
+        if self.type == 'universal':
+            return 'list'
+        if self.type == 'datetime':
+            return 'clock'
+        if self.type == 'date':
+            return 'calendar'
 
     @property
     def ordered_choices(self):
@@ -328,7 +327,7 @@ class ChoiceValue(models.Model):
 
 
 class Comment(models.Model):
-    text = MarkdownField()
+    text = models.TextField()
     date_created = models.DateTimeField()
     name = models.CharField(max_length=80)
     user = models.ForeignKey(

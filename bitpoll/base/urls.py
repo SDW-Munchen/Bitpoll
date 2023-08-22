@@ -1,5 +1,4 @@
-from django.conf.urls import url
-from django.urls import path, include
+from django.urls import path, include, re_path
 
 from rest_framework import routers
 
@@ -12,12 +11,12 @@ router.register(r"social_account", views.SocialAccountViewSet)
 
 urlpatterns = [
     path("api/", include(router.urls)),
-    url(r"^settings/$", views.user_settings, name="settings"),
-    url(r"^$", views.index, name="index"),
-    url(r"^imprint/$", views.imprint, name="imprint"),
-    url(r"^about/$", views.about, name="about"),
-    url(r"^licenses/$", views.licenses, name="base_licenses"),
-    url(r"^technical_info/$", views.tecnical, name="technical"),
-    url(r"^autocomplete$", views.autocomplete, name="base_autocomplete"),
-    url(r"^problems$", views.problems, name="base_problems"),
+    re_path(r"^settings/$", views.user_settings, name="settings"),
+    re_path(r"^$", views.index, name="index"),
+    re_path(r"^imprint/$", views.imprint, name="imprint"),
+    re_path(r"^about/$", views.about, name="about"),
+    re_path(r"^licenses/$", views.licenses, name="base_licenses"),
+    re_path(r"^technical_info/$", views.tecnical, name="technical"),
+    re_path(r"^autocomplete$", views.autocomplete, name="base_autocomplete"),
+    re_path(r"^problems$", views.problems, name="base_problems"),
 ]

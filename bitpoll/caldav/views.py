@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, get_object_or_404
 from django.template.response import TemplateResponse
 from django.utils.timezone import now
-from django.utils.translation import ugettext_lazy
+from django.utils.translation import gettext_lazy
 from django.views.decorators.http import require_POST
 from urllib3.util import parse_url, Url
 

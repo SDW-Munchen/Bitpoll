@@ -13,8 +13,7 @@ from django.forms import (
     URLInput,
     TextInput,
 )
-from django.utils.translation import ugettext as _
-from urllib3.util import Url, parse_url
+from django.utils.translation import gettext as _
 
 from django_token_bucket.models import TokenBucket
 from .models import DavCalendar
@@ -91,11 +90,15 @@ class URLAuthField(MultiValueField):
             auth += passwd
         parsed = urlsplit(data_list[0])
         if auth:
-            host = auth + "@" + parsed.netloc
-            return urlunsplit(
-                (parsed.scheme, host, parsed.path, parsed.query, parsed.fragment)
-            )
-        return parsed.url
+            host = auth + '@' + parsed.netloc
+            return urlunsplit((
+                parsed.scheme,
+                host,
+                parsed.path,
+                parsed.query,
+                parsed.fragment
+            ))
+        return parsed.geturl()
 
 
 class DavCalendarForm(ModelForm):

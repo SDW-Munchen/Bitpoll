@@ -71,7 +71,7 @@ FIELD_ENCRYPTION_KEY = "FILL_IN_ECRYPTION_KEY"
     - "Redirection URI": This has to be the following URI (fill in the base domain):
         -> 'https://bitpoll.sdw-muenchen.org/accounts/nextcloud_auth/login/callback/' <-
 3. Copy the "Client Identification" and paste it into the "client_id" field.
-4. Copy the "Secret" and paste it into the "secret" field. 
+4. Copy the "Secret" and paste it into the "secret" field.
 """
 SOCIALACCOUNT_PROVIDERS = {
     'nextcloud_auth': {
@@ -112,7 +112,7 @@ HOME_URL_NAME = "Nextcloud"
 ALLOWED_HOSTS = [
     "bitpoll.sdw-muenchen.org"
 ]
-CSRF_TRUSTED_ORIGINS = ["sdw-muenchen.org", "bitpoll.sdw-muenchen.org"]
+CSRF_TRUSTED_ORIGINS = ["http://sdw-muenchen.org", "https://sdw-muenchen.org", "http://bitpoll.sdw-muenchen.org", "https://bitpoll.sdw-muenchen.org"]
 X_FRAME_OPTIONS = 'allow-from https://sdw-muenchen.org/'
 
 # Nextcloud groups whose users should be awarded the admin status in the Bitpoll application

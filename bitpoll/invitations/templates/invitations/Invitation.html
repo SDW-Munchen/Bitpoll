@@ -8,67 +8,70 @@
 {% block title %}{% trans 'Invite to Poll' %}{% endblock %}
 
 {% block content %}
-    {% include 'poll/poll_header.html' %}
-    <div class="container">
+{% include 'poll/poll_header.html' %}
+<div class="container">
     <h3>{% trans 'Invitations' %}</h3>
-        <div class="col-md-6">
-            <form method="post" action="{% url 'invitations' poll.url %}">
-                {% csrf_token %}
-                <table class="table table-condensed table-striped">
-                    <tr>
-                        <th></th>
-                        <th>{% trans 'User' %}</th>
-                        <th>{% trans 'Invited' %}</th>
-                        <th>{% trans 'Actions' %}</th>
-                    </tr>
-                    {% for invitation in poll.invitation_set.all %}
-                        <tr>
-                            <td>{% if invitation.vote %}<i class="fa fa-check"></i>{% endif %}</td>
-                            <td>
-                                {{ invitation.user.username }}
-                            </td>
-                            <td>
-                                {{ invitation.date_created }}
-                            </td>
-                            <td>
-                                <button class="action default" type="submit" title="{% trans 'Resend invitation' %}" name="resend" value="{{ invitation.id }}"><i class="fa fa-refresh"></i></button>
-                                <button class="action default" type="submit" title="{% trans 'Delete invitation' %}" name="delete" value="{{ invitation.id }}"><i class="fa fa-trash-o"></i></button>
-                            </td>
-                        </tr>
-                    {% endfor %}
-                </table>
-                {% if False %}  {# TODO #}
-                    <input class="action secondary" value="{% trans 'Resend all' %}" name="resend_all" type="submit" style="float: right;">
-                {% endif %}
-            </form>
-        </div>
-        <div class="col-md-6">
-            <form method="post" action="{% url 'invitations_send' poll.url %}">
-                {% csrf_token %}
-                <div class="form-group">
-                  <label for="invite">{% trans 'User or Group' %}</label>
-                    <div class="input-group">
-                        <div style="margin-right: 1em;">
-                          <select class="form-select form-control" name="invite">
+    <div class="col-md-6">
+        <form method="post" action="{% url 'invitations' poll.url %}">
+            {% csrf_token %}
+            <table class="table table-condensed table-striped">
+                <tr>
+                    <th></th>
+                    <th>{% trans 'User' %}</th>
+                    <th>{% trans 'Invited' %}</th>
+                    <th>{% trans 'Actions' %}</th>
+                </tr>
+                {% for invitation in poll.invitation_set.all %}
+                <tr>
+                    <td>{% if invitation.vote %}<i class="fa-solid fa-check"></i>{% endif %}</td>
+                    <td>
+                        {{ invitation.user.username }}
+                    </td>
+                    <td>
+                        {{ invitation.date_created }}
+                    </td>
+                    <td>
+                        <button class="action default" type="submit" title="{% trans 'Resend invitation' %}"
+                            name="resend" value="{{ invitation.id }}"><i class="fa fa-refresh"></i></button>
+                        <button class="action default" type="submit" title="{% trans 'Delete invitation' %}"
+                            name="delete" value="{{ invitation.id }}"><i class="fa fa-trash-o"></i></button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+            {% if False %} {# TODO #}
+            <input class="action secondary" value="{% trans 'Resend all' %}" name="resend_all" type="submit"
+                style="float: right;">
+            {% endif %}
+        </form>
+    </div>
+    <div class="col-md-6">
+        <form method="post" action="{% url 'invitations_send' poll.url %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="invite">{% trans 'User or Group' %}</label>
+                <div class="input-group">
+                    <div style="margin-right: 1em;">
+                        <select class="form-select form-control" name="invite">
                             {% for choice in choices %}
                             <option value="{{ choice.0 }}">{{ choice.1 }}</option>
                             {% endfor %}
-                          </select>
-                        </div>
-                        <div class="input-group-btn">
-                            <input class="action primary" value="Invite" type="submit">
-                        </div>
+                        </select>
                     </div>
-                    <ul class="help-list">
-                        <li>{% trans 'Enter the username or group title of the user or group of users you want to invite.' %}</li>
-                        <li>{% trans 'You can enter multiple users or groups.' %}</li>
-                        <li>{% trans 'Duplicates are ignored automatically.' %}</li>
-                        <li>{% trans 'Group invitations are resolved immediately, so adding more members to a group later will not invite those new members, unless you re-invite the group.' %}</li>
-                    </ul>
+                    <div class="input-group-btn">
+                        <input class="action primary" value="Invite" type="submit">
+                    </div>
                 </div>
-            </form>
-        </div>
-        <hr>
-        <a href="{% url 'poll_settings' poll.url %}" class="action">{% trans 'Back to poll' %}</a>
+                <ul class="help-list">
+                    <li>{% trans 'Enter the username or group title of the user or group of users you want to invite.' %}</li>
+                    <li>{% trans 'You can enter multiple users or groups.' %}</li>
+                    <li>{% trans 'Duplicates are ignored automatically.' %}</li>
+                    <li>{% trans 'Group invitations are resolved immediately, so adding more members to a group later will not invite those new members, unless you re-invite the group.' %}</li>
+                </ul>
+            </div>
+        </form>
+    </div>
+    <hr>
+    <a href="{% url 'poll_settings' poll.url %}" class="action">{% trans 'Back to poll' %}</a>
 </div>
 {% endblock %}
