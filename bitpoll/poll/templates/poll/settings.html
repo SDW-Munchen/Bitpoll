@@ -69,8 +69,7 @@
                     {% endfor %}
                 </select>
                 <div class="checkbox">
-                    <input type="checkbox" id="use_user_timezone" name="{{ form.use_user_timezone.name }}" {% if
-                        form.use_user_timezone.value %} checked {% endif %}>
+                    <input type="checkbox" id="use_user_timezone" name="{{ form.use_user_timezone.name }}" {% if form.use_user_timezone.value %} checked {% endif %}>
                     <label for="use_user_timezone">{% trans 'Translate all times to the users timezone' %}</label>
                 </div>
             </div>
@@ -94,93 +93,73 @@
         <div class="col-md-5 col-md-offset-1">
             <label>{% trans 'Additional Settings' %}</label>
             <div class="checkbox">
-                <input type="checkbox" id="allow_comments" name="{{ form.allow_comments.name }}" {% if
-                    form.allow_comments.value %} checked {% endif %}>
+                <input type="checkbox" id="allow_comments" name="{{ form.allow_comments.name }}" {% if form.allow_comments.value %} checked {% endif %}>
                 <label for="allow_comments">{% trans 'Allow comments' %}</label>
             </div>
             <div class="checkbox">
-                <input type="checkbox" id="anonymous_allowed" name="{{ form.anonymous_allowed.name }}" {% if
-                    form.anonymous_allowed.value %} checked {% endif %}>
+                <input type="checkbox" id="anonymous_allowed" name="{{ form.anonymous_allowed.name }}" {% if form.anonymous_allowed.value %} checked {% endif %}>
                 <label for="anonymous_allowed">{% trans 'Allow anonymous votes' %}</label>
             </div>
             <div class="checkbox">
-                <input type="checkbox" id="require_login" name="{{ form.require_login.name }}" {% if
-                    form.require_login.value %} checked {% endif %}>
+                <input type="checkbox" id="require_login" name="{{ form.require_login.name }}" {% if form.require_login.value %} checked {% endif %}>
                 <label for="require_login">{% trans 'login required to vote' %}</label>
             </div>
             <div class="checkbox">
-                <input type="checkbox" id="require_login_view" name="{{ form.require_login_view.name }}" {% if
-                    form.require_login_view.value %} checked {% endif %}>
+                <input type="checkbox" id="require_login_view" name="{{ form.require_login_view.name }}" {% if form.require_login_view.value %} checked {% endif %}>
                 <label for="require_login_view">{% trans 'login required to view' %}</label>
             </div>
             <div class="checkbox">
-                <input type="checkbox" id="require_invitation" name="{{ form.require_invitation.name }}" {% if
-                    form.require_invitation.value %} checked {% endif %}>
+                <input type="checkbox" id="require_invitation" name="{{ form.require_invitation.name }}" {% if form.require_invitation.value %} checked {% endif %}>
                 <label for="require_invitation">{% trans 'Invitation required to vote' %}</label>
             </div>
             <div class="checkbox">
-                <input type="checkbox" id="public_listening" name="{{ form.public_listening.name }}" {% if
-                    form.public_listening.value %} checked {% endif %}>
+                <input type="checkbox" id="public_listening" name="{{ form.public_listening.name }}" {% if form.public_listening.value %} checked {% endif %}>
                 <label for="public_listening">{% trans 'Show in public poll list' %}</label>
             </div>
             <div class="checkbox">
                 <input type="checkbox" id="allow_unauthenticated_vote_changes"
-                    name="{{ form.allow_unauthenticated_vote_changes.name }}" {% if
-                    form.allow_unauthenticated_vote_changes.value %} checked {% endif %}>
+                    name="{{ form.allow_unauthenticated_vote_changes.name }}" {% if form.allow_unauthenticated_vote_changes.value %} checked {% endif %}>
                 <label for="allow_unauthenticated_vote_changes">{% trans 'Allow unauthenticated vote changes' %}</label>
             </div>
             <div class="checkbox">
-                <input type="checkbox" id="one_vote_per_user" name="{{ form.one_vote_per_user.name }}" {% if
-                    form.one_vote_per_user.value %} checked {% endif %}>
+                <input type="checkbox" id="one_vote_per_user" name="{{ form.one_vote_per_user.name }}" {% if form.one_vote_per_user.value %} checked {% endif %}>
                 <label for="one_vote_per_user">{% trans 'One vote per user' %}</label>
             </div>
             <div class="checkbox">
-                <input type="checkbox" id="show_invitations" name="{{ form.show_invitations.name }}" {% if
-                    form.show_invitations.value %} checked {% endif %}>
+                <input type="checkbox" id="show_invitations" name="{{ form.show_invitations.name }}" {% if form.show_invitations.value %} checked {% endif %}>
                 <label for="show_invitations">{% trans 'Show invitations as empty votes' %}</label>
             </div>
             <div class="checkbox">
-                <input type="checkbox" id="vote_all" name="{{ form.vote_all.name }}" {% if form.vote_all.value %}
-                    checked {% endif %}>
+                <input type="checkbox" id="vote_all" name="{{ form.vote_all.name }}" {% if form.vote_all.value %} checked {% endif %}>
                 <label for="vote_all">{% trans 'Forbid empty choices' %}</label>
             </div>
             <div class="checkbox">
-                <input type="checkbox" id="vote_hide_participants" name="{{ form.hide_participants.name }}" {% if
-                    form.hide_participants.value %} checked {% endif %}>
+                <input type="checkbox" id="vote_hide_participants" name="{{ form.hide_participants.name }}" {% if form.hide_participants.value %} checked {% endif %}>
                 <label for="vote_hide_participants">{% trans 'Hide participants' %}</label>
             </div>
             <div class="checkbox">
-                <input type="checkbox" id="vote_show_score_in_summary" name="{{ form.show_score_in_summary.name }}" {%
-                    if form.show_score_in_summary.value %} checked {% endif %}>
+                <input type="checkbox" id="vote_show_score_in_summary" name="{{ form.show_score_in_summary.name }}" {% if form.show_score_in_summary.value %} checked {% endif %}>
                 <label for="vote_show_score_in_summary">{% trans 'Show score instead of percentage' %}</label>
             </div>
             <div class="checkbox">
-                <input type="checkbox" id="change_vote_after_event" name="{{ form.change_vote_after_event.name }}" {% if
-                    form.change_vote_after_event.value %} checked {% endif %}>
+                <input type="checkbox" id="change_vote_after_event" name="{{ form.change_vote_after_event.name }}" {% if form.change_vote_after_event.value %} checked {% endif %}>
                 <label for="change_vote_after_event">{% trans 'change vote after event' %}</label>
             </div>
             <div class="checkbox">
-                <input type="checkbox" id="separate_groups" name="{{ form.separate_groups.name }}" {% if
-                    form.separate_groups.value %} checked {% endif %}>
-                <label for="separate_groups">{% trans 'visually separate Stips, Vertrauenspersonen and Alumni'
-                    %}</label>
+                <input type="checkbox" id="separate_groups" name="{{ form.separate_groups.name }}" {% if form.separate_groups.value %} checked {% endif %}>
+                <label for="separate_groups">{% trans 'visually separate Stips, Vertrauenspersonen and Alumni' %}</label>
             </div>
             <div class="">
                 {% trans 'Sort results by' %}:
                 {# TODO: use enum values #}
-                <input type="radio" name="{{ form.sorting.name }}" value="0" id="sorting_date" {% if
-                    form.sorting.value==0 %} checked {% endif %}><label for="sorting_date">{% trans 'Date' %}</label>
-                <input type="radio" name="{{ form.sorting.name }}" value="1" id="sorting_name" {% if
-                    form.sorting.value==1 %} checked {% endif %}><label for="sorting_name">{% trans 'Name' %}</label>
-                <input type="radio" name="{{ form.sorting.name }}" value="2" id="sorting_name" {% if
-                    form.sorting.value==2 %} checked {% endif %}><label for="sorting_name">{% trans 'Name (VP last)'
-                    %}</label>
+                <input type="radio" name="{{ form.sorting.name }}" value="0" id="sorting_date" {% if form.sorting.value == 0 %} checked {% endif %}><label for="sorting_date">{% trans 'Date' %}</label>
+                <input type="radio" name="{{ form.sorting.name }}" value="1" id="sorting_name" {% if form.sorting.value == 1 %} checked {% endif %}><label for="sorting_name">{% trans 'Name' %}</label>
+                <input type="radio" name="{{ form.sorting.name }}" value="2" id="sorting_name" {% if form.sorting.value == 2 %} checked {% endif %}><label for="sorting_name">{% trans 'Name (VP last)' %}</label>
 
             </div>
             <div class="help-block">
                 {% blocktrans %}
-                These settings are not retroactive, meaning that changing them will not modify votes/comments already
-                created.
+                These settings are not retroactive, meaning that changing them will not modify votes/comments already created.
                 {% endblocktrans %}
             </div>
 
