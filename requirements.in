@@ -1,4 +1,4 @@
-django>=5.0,<5.1
+django<4.1
 django-widget-tweaks
 django-markdownify
 pytz

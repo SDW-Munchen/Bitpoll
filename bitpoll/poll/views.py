@@ -35,12 +35,8 @@ from django.utils.timezone import (
     make_aware,
     make_naive,
     now,
-    # utc,
+    utc,
 )
-# for django>5
-from datetime import timezone
-utc = timezone.utc
-
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.http import require_POST
 from django_token_bucket.models import TokenBucket
@@ -66,6 +62,7 @@ from .models import (
     Vote,
     VoteChoice,
 )
+
 
 def poll(request, poll_url: str, reduced: str = None, export: bool = False):
     """
