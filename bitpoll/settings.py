@@ -42,6 +42,8 @@ STATIC_URL = "/static/"
 
 ALLOWED_HOSTS = []
 
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
 TEMPLATE_ALLOWABLE_SETTINGS_VALUES = [
     "ALLOW_CUSTOM_SLUGS",
     "SITE_NAME",
