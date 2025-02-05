@@ -1,17 +1,21 @@
 {% load i18n %}
 <div class="visible-xs visible-sm">
-    <ul class="steps">
-        <li class="{% ifequal step 1 %}current{% endifequal %}"><span>{% trans 'Step 1' %}</span>{% trans 'Days' %}
-        </li>
-        <li class="{% ifequal step 2 %}current{% endifequal %}"><span>{% trans 'Step 2' %}</span>{% trans 'Labels' %}
-        </li>
-    </ul>
+  <ul class="steps">
+    <li class="{% if step == 1 %}current{% endif %}">
+      <span>{% trans 'Step 1' %}</span>{% trans 'Days' %}
+    </li>
+    <li class="{% if step == 2 %}current{% endif %}">
+      <span>{% trans 'Step 2' %}</span>{% trans 'Labels' %}
+    </li>
+  </ul>
 </div>
 <div class="hidden-xs hidden-sm">
-    <ul class="steps">
-        <li class="{% ifequal step 1 %}current{% endifequal %}"><span>{% trans 'Step 1' %}</span>{% trans 'Select days' %}
-        </li>
-        <li class="{% ifequal step 2 %}current{% endifequal %}"><span>{% trans 'Step 2' %}</span>{% trans 'Assign labels' %}
-        </li>
-    </ul>
+  <ul class="steps">
+    <li class="{% if step == 1 %}current{% endif %}">
+      <span>{% trans 'Step 1' %}</span>{% trans 'Select days' %}
+    </li>
+    <li class="{% if step == 2 %}current{% endif %}">
+      <span>{% trans 'Step 2' %}</span>{% trans 'Assign labels' %}
+    </li>
+  </ul>
 </div>

@@ -10,6 +10,8 @@ import sys
 
 from bitpoll.poll.models import Choice, ChoiceValue, Comment, Poll, Vote, VoteChoice
 
+# for django >5, timezone imported in Poll (bitpoll/poll/views.py)
+utc = timezone.utc
 
 POLL_TYPE_MAPPING = {
     "normal": "universal",
