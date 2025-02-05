@@ -96,7 +96,7 @@
                         {% if vote|vote_can_delete:request.user %}
                             <a href="{% url 'poll_voteDelete' poll.url vote.id %}{{ url_append }}"
                                 class="btn btn-xs btn-default" title="{{ _('Delete vote') }}"><i
-                                    class="fa fa-trash-o"></i></a>
+                                    class="fa fa-trash"></i></a>
                         {% endif %}
                         {% if vote.user == None and vote|vote_can_edit:request.user %}
                             <a href="{% url 'poll_voteAssign' poll.url vote.id %}{{ url_append }}"

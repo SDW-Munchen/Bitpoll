@@ -35,8 +35,12 @@ from django.utils.timezone import (
     make_aware,
     make_naive,
     now,
-    utc,
+    # utc,
 )
+# for django>5
+from datetime import timezone
+utc = timezone.utc
+
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.http import require_POST
 from django_token_bucket.models import TokenBucket
@@ -62,7 +66,6 @@ from .models import (
     Vote,
     VoteChoice,
 )
-
 
 def poll(request, poll_url: str, reduced: str = None, export: bool = False):
     """
@@ -773,9 +776,7 @@ def edit_choice_date_labels(request, poll_url):
         for key in request.POST.keys():
             if key.startswith("label_"):
                 if date := parse_date(key.replace("label_", "")):
-                    datetime_date = utc.localize(
-                        dt.datetime.combine(date, dt.time(0, 0))
-                    )
+                    datetime_date = dt.datetime.combine(date, dt.time(0, 0)).astimezone(utc)
                     choice_filter = current_poll.choice_set.filter(date=datetime_date)
                     if choice_filter.exists():
                         choice = choice_filter.first()
@@ -1293,9 +1294,7 @@ def vote(request, poll_url, vote_id=None):
         current_poll.type == "datetime" or current_poll.type == "date"
     ) and not current_poll.change_vote_after_event:
         only_choices_after = now() - timedelta(hours=allow_edit_hours)
-        only_choices_after = utc.localize(
-            dt.datetime.combine(only_choices_after.date(), dt.time(0, 0))
-        )
+        only_choices_after = dt.datetime.combine(only_choices_after.date(), dt.time(0, 0)).astimezone(utc)
 
     if request.method == "POST":
         vote_id = request.POST.get("vote_id", None)
