@@ -35,12 +35,17 @@ from django.utils.timezone import (
     make_aware,
     make_naive,
     now,
-    utc,
 )
+
+# for django>5
+from datetime import timezone
+utc = timezone.utc
+
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.http import require_POST
 from django_token_bucket.models import TokenBucket
-from pytz import all_timezones, timezone
+from zoneinfo import ZoneInfo, available_timezones
+from datetime import timezone as dt_timezone
 
 from .forms import (
     ChoiceValueForm,
@@ -62,7 +67,6 @@ from .models import (
     Vote,
     VoteChoice,
 )
-
 
 def poll(request, poll_url: str, reduced: str = None, export: bool = False):
     """
@@ -696,7 +700,7 @@ def edit_date_choice(request, poll_url):
             # clean the data
             for choice in form.cleaned_data["dates"].split(","):
                 try:
-                    tz = timezone("UTC")
+                    tz = ZoneInfo("UTC")
                     parsed_date = parse_datetime("{} 0:0".format(choice))
                     if parsed_date:
                         date = tz.localize(parsed_date)
@@ -802,7 +806,7 @@ def edit_dt_choice_date(request, poll_url):
     if not current_poll.can_edit(request.user, request):
         return redirect("poll", poll_url)
 
-    tz_activate(current_poll.timezone_name)
+    tz = ZoneInfo("UTC")
     initial = {
         "dates": ",".join(
             set(
@@ -869,7 +873,7 @@ def edit_dt_choice_time(request, poll_url):
     if not current_poll.can_edit(request.user, request):
         return redirect("poll", poll_url)
 
-    tz_activate(current_poll.timezone_name)
+    tz = ZoneInfo(current_poll.timezone_name)
     initial = {
         "dates": ",".join(
             date_format(localtime(c.date), format="Y-m-d")
@@ -943,7 +947,7 @@ def edit_dt_choice_combinations(request, poll_url):
     if not current_poll.can_edit(request.user, request):
         return redirect("poll", poll_url)
 
-    tz_activate(current_poll.timezone_name)
+    tz = ZoneInfo(current_poll.timezone_name)
     initial_choices = current_poll.choice_set.filter(deleted=False).values_list("date")
     initial_choices = list(initial_choices)
     initial_choices = [
@@ -967,10 +971,9 @@ def edit_dt_choice_combinations(request, poll_url):
         # parse datetime objects of chosen combinations
         for combination in chosen_combinations:
             try:
-                tz = timezone(current_poll.timezone_name)
-                timestamp = parse_datetime(combination)
-                if timestamp:
-                    chosen_times.append(tz.localize(timestamp))
+                parsed_date = parse_datetime(combination)
+                if parsed_date:
+                    chosen_times.append(parsed_date.astimezone(tz))
                 else:
                     messages.error(
                         request,
@@ -1796,8 +1799,8 @@ def settings(request, poll_url):
                         old_timezone_name != new_poll.timezone_name
                         and current_poll.type == "datetime"
                     ):
-                        new_timezone = timezone(new_poll.timezone_name)
-                        old_timezone = timezone(old_timezone_name)
+                        new_timezone = ZoneInfo(new_poll.timezone_name)
+                        old_timezone = ZoneInfo(old_timezone_name)
                         for choice in current_poll.choice_set.all():
                             choice.date = make_aware(
                                 make_naive(choice.date, old_timezone), new_timezone
@@ -1823,7 +1826,7 @@ def settings(request, poll_url):
             "page": "Settings",
             "groups": groups,
             "results": POLL_RESULTS,
-            "timezones": all_timezones,
+            "timezones": sorted(available_timezones()),
             "user_error": user_error,
             "user_select": user,
         },

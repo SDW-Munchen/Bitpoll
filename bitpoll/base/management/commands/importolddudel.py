@@ -1,5 +1,6 @@
 import psycopg2
-import pytz
+from zoneinfo import ZoneInfo
+from datetime import timezone
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
@@ -10,6 +11,8 @@ import sys
 
 from bitpoll.poll.models import Choice, ChoiceValue, Comment, Poll, Vote, VoteChoice
 
+# for django >5, timezone imported in Poll (bitpoll/poll/views.py)
+utc = timezone.utc
 
 POLL_TYPE_MAPPING = {
     "normal": "universal",
@@ -82,7 +85,7 @@ class Command(BaseCommand):
                 "show_invitations": poll[17] or True,
                 "timezone_name": poll[18] or "Europe/Berlin",
             }
-            timezone = pytz.timezone(poll["timezone_name"])
+            timezone = ZoneInfo(poll["timezone_name"])
             local_poll = Poll.objects.filter(url=poll["slug"]).first()
 
             if options["deleted_only"] and not poll["deleted"]:
@@ -147,7 +150,7 @@ class Command(BaseCommand):
 
             # nothing to delete, poll has just been created.
 
-            timezone = pytz.timezone(poll.timezone_name)
+            timezone = ZoneInfo(poll.timezone_name)
 
             # choices
             cursor.execute(
@@ -302,4 +305,4 @@ class Command(BaseCommand):
 def _fix_timezone(obj, tz):
     if obj.tzinfo is not None:
         return obj
-    return pytz.utc.localize(obj).astimezone(tz)
+    return obj.replace(tzinfo=timezone.utc).astimezone(tz)

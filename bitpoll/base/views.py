@@ -20,7 +20,7 @@ from bitpoll.poll.models import ChoiceValue, Poll, Vote, PollWatch
 
 from bitpoll.base.models import USER_LANG
 from bitpoll.base.forms import BitpollUserSettingsForm
-from pytz import all_timezones
+from zoneinfo import available_timezones
 
 from bitpoll.registration.forms import RegisterForm
 from bitpoll.settings import IMPRINT_URL
@@ -164,7 +164,7 @@ def user_settings(request):
             "user": request.user,
             "user_form": user_form,
             "languages": USER_LANG,
-            "timezones": all_timezones,
+            "timezones": sorted(available_timezones()),
             "calendar_form": DavCalendarForm(user=request.user)
             if settings.CALENDAR_ENABLED
             else None,

@@ -70,6 +70,8 @@ class URLAuthField(MultiValueField):
                 validators=[URLValidator(schemes=["http", "https"])],
                 help_text="URL",
                 required=True,
+                # This explicitly sets HTTPS as the preferred scheme when entered without a scheme
+                assume_scheme="https",
             ),
             CharField(required=False, help_text="User"),
             CharField(required=False, help_text="Password", widget=PasswordInput),
