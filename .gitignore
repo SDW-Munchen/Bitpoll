@@ -14,3 +14,4 @@ bitpoll/settings_local.py
 run
 venv/
 .DS_Store
+.devnotes.md

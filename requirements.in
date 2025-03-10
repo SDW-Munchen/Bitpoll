@@ -1,7 +1,6 @@
 django>=5.0,<5.1
 django-widget-tweaks
 django-markdownify
-pytz
 django-simple-csp
 libsasscompiler
 django-pipeline
@@ -14,3 +13,5 @@ django-allauth
 uwsgi
 mysqlclient
 djangorestframework
+django-stubs
+psycopg2
